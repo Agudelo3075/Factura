@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recibo de Pago ICFES</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #dbdbdb;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            width: 850px;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .section {
+            position: relative;
+            padding-left: 30px;
+        }
+        .side-label {
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%) rotate(180deg);
+            writing-mode: vertical-rl;
+            text-align: center;
+            font-size: 15px;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .logo-text {
+            font-family: Arial, sans-serif;
+            font-size: 42px;
+            font-weight: bold;
+            color: #333;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+        
+        .header-title-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 2px solid black;
+            padding-bottom: 4px;
+            margin-bottom: 10px;
+        }
+        .header-title-container div {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .alert-box {
+            border: 2px solid black;
+            display: flex;
+            margin-bottom: 15px;
+        }
+        .alert-icon {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .alert-content {
+            padding: 10px 0;
+        }
+        .alert-content p {
+            margin: 0 0 5px 0;
+            font-size: 13px;
+        }
+        .alert-content p.bold-p {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .payment-ref-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 10px;
+        }
+        .barcode-section {
+            text-align: center;
+            flex-grow: 1;
+        }
+        .barcode {
+            width: 450px;
+            height: 60px;
+            background-image: repeating-linear-gradient(to right,
+                #000 0, #000 2px, transparent 2px, transparent 4px,
+                #000 4px, #000 5px, transparent 5px, transparent 8px,
+                #000 8px, #000 12px, transparent 12px, transparent 15px,
+                #000 15px, #000 16px, transparent 16px, transparent 22px,
+                #000 22px, #000 25px, transparent 25px, transparent 26px,
+                #000 26px, #000 30px, transparent 30px, transparent 33px,
+                #000 33px, #000 34px, transparent 34px, transparent 38px
+            );
+            margin: 0 auto 5px auto;
+        }
+        .barcode-numbers {
+            font-size: 10px;
+            color: #333;
+        }
+        .ref-box {
+            border: 2px solid black;
+            text-align: center;
+            width: 180px;
+        }
+        .ref-box .ref-title {
+            border-bottom: 1px solid black;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 4px;
+        }
+        .ref-box .ref-number {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 4px;
+        }
+        
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid black;
+        }
+        .main-table th, .main-table td {
+            border: 1px solid black;
+            padding: 6px 8px;
+            font-size: 13px;
+        }
+        .main-table th {
+            background-color: #a8a8a8;
+        }
+        
+        .scissors-border {
+            border-top: 3px dotted #333;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .bottom-features {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .instructions-box {
+            border: 1px solid black;
+            padding: 10px;
+            width: 61%;
+            font-size: 10.5px;
+            text-align: justify;
+            line-height: 1.25;
+        }
+        
+        .payment-points-container {
+            width: 36%;
+        }
+        .points-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid black;
+        }
+        .points-table th {
+            background-color: #a8a8a8;
+            border: 1px solid black;
+            font-size: 13px;
+            padding: 6px;
+        }
+        .points-table td {
+            border: 1px solid black;
+            padding: 8px;
+            vertical-align: top;
+            font-size: 9px;
+            text-align: center;
+        }
+        .pse-logo {
+            background-color: #555;
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px auto;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .bank-exclusive {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+        
+        .date-timestamp {
+            font-size: 11px;
+            margin-top: 30px;
+        }
+        
+        .bold { font-weight: bold; }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- TOP SECTION (Banco) -->
+    <div class="section">
+        <div class="side-label" style="letter-spacing: 2px;">
+            ⋮Banco <br>
+            <span style="font-size:8px;">.......................................</span>
+        </div>
+        
+        <div class="logo">
+            <span class="logo-text">icfes</span>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin-left: 2px;">
+                <path d="M12 2v20M2 12h20M5 5l14 14M5 19L19 5" stroke="#777" stroke-width="4" stroke-linecap="square"/>
+            </svg>
+        </div>
+        
+        <div class="header-title-container">
+            <div>Instituto Colombiano para la Evaluación de la Educación NIT: 860024301-6</div>
+            <div>Recibo de Pago</div>
+        </div>
+        
+        <div class="alert-box">
+            <div class="alert-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2">
+                    <path d="M12 2L1 21h22L12 2z" stroke-linejoin="round"></path>
+                    <line x1="12" y1="9" x2="12" y2="15"></line>
+                    <circle cx="12" cy="18" r="1.5" fill="black"></circle>
+                </svg>
+            </div>
+            <div class="alert-content">
+                <p class="bold-p">Señor cajero:</p>
+                <p>- Favor NO usar el lector de códigos en el mismo recibo más de 1 vez.</p>
+                <p>- Favor NO recibir pagos después de la fecha límite contenida en el recibo.</p>
+            </div>
+        </div>
+        
+        <div class="student-info">
+            <span>CC 1094896263 JUAN PABLO BEDOYA PAYAN4709 &nbsp;&nbsp;&nbsp; TECNOLOGIA EN DESARROLLO DE SOFTWARE</span>
+            <span>Código ICFES: 02470922833</span>
+        </div>
+        
+        <div class="payment-ref-container">
+            <div class="barcode-section">
+                <div class="barcode"></div>
+                <div class="barcode-numbers">(415)7709998003156 (8020)115690709940 (3900)0000167000 (96)13022026</div>
+            </div>
+            <div class="ref-box">
+                <div class="ref-title">Referencia de Pago</div>
+                <div class="ref-number">115690709940</div>
+            </div>
+        </div>
+        
+        <table class="main-table">
+            <thead>
+                <tr>
+                    <th style="width: 50%;">Concepto</th>
+                    <th style="width: 20%;">Valor Unit.</th>
+                    <th style="width: 10%;">Cant.</th>
+                    <th style="width: 20%;">Valor Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Examen Saber TyT - Estudiante</td>
+                    <td class="text-right">$ 287,000</td>
+                    <td class="text-center">1</td>
+                    <td class="text-right">$ 287,000</td>
+                </tr>
+                <tr>
+                    <td class="text-center bold">Fecha límite de pago</td>
+                    <td class="text-center bold">09/mar/2026</td>
+                    <td class="text-right bold">Valor Total</td>
+                    <td class="text-right bold">$ 287,000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- CUT LINE -->
+    <div class="scissors-border"></div>
+
+    <!-- BOTTOM SECTION (Cliente Unitario) -->
+    <div class="section">
+        <div class="side-label">Cliente unitario</div>
+        
+        <!-- Logo implicitly missing in bottom section in some parts but the image shows it isn't? Wait, let's re-examine image: 
+             The image actually has NO logo on the bottom half, just the text "Instituto...". 
+             Wait, looking closely at the left of "Instituto Colombiano..." in the bottom section, the space for the logo is missing. 
+             So I will omit the logo here.
+        -->
+        <div class="header-title-container">
+            <div>Instituto Colombiano para la Evaluación de la Educación NIT: 860024301-6</div>
+            <div>Recibo de Pago</div>
+        </div>
+        
+        <div class="student-info" style="margin-top: 20px;">
+            <span>CC 1094896263 JUAN PABLO BEDOYA PAYAN4709 &nbsp;&nbsp;&nbsp; TECNOLOGIA EN DESARROLLO DE SOFTWARE</span>
+            <span>Código ICFES: 02470922833</span>
+        </div>
+        
+        <div class="payment-ref-container">
+            <div class="barcode-section">
+                <div class="barcode"></div>
+                <div class="barcode-numbers">(415)7709998003156 (8020)115690709940 (3900)0000167000 (96)13022026</div>
+            </div>
+            <div class="ref-box">
+                <div class="ref-title">Referencia de Pago</div>
+                <div class="ref-number">115690709940</div>
+            </div>
+        </div>
+        
+        <table class="main-table">
+            <thead>
+                <tr>
+                    <th style="width: 50%;">Concepto</th>
+                    <th style="width: 20%;">Valor Unit.</th>
+                    <th style="width: 10%;">Cant.</th>
+                    <th style="width: 20%;">Valor Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Examen Saber TyT - Estudiante</td>
+                    <td class="text-right">$ 287,000</td>
+                    <td class="text-center">1</td>
+                    <td class="text-right">$ 287,000</td>
+                </tr>
+                <tr>
+                    <td class="text-center bold">Fecha límite de pago</td>
+                    <td class="text-center bold">09/mar/2026</td>
+                    <td class="text-right bold">Valor Total</td>
+                    <td class="text-right bold">$ 287,000</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- bottom instructions & points -->
+        <div class="bottom-features">
+            <div class="instructions-box">
+                Lleve a cabo el recaudo dentro de los plazos establecidos. Realice la consignación antes de la fecha límite. 
+                Después de 24 horas de haber realizado el pago del recibo en banco, podrá validar su proceso ingresando a 
+                Prisma a través de: http://www.icfesinteractivo.gov.co/.<br>
+                Si Usted es representante de una institución de educación media que tiene más de una sede jornada o una 
+                institución de educación superior con varios programas académicos, debe generar recibos independientes por 
+                cada uno de ellos.<br>
+                No existe la posibilidad de trasladar estudiantes entre sedes jornadas o programas académicos después del pago. 
+                El soporte al proceso de inscripción se presta a través de la línea gratuita nacional 018000-519535 y desde 
+                Bogotá al (57+1)4841460. El horario de atención es de lunes a viernes de 7:00 a.m. a 7:00 p.m. Consulte el 
+                paso a paso de todo el proceso en la sección de AYUDA de www.icfesinteractivo.gov.co.
+            </div>
+            
+            <div class="payment-points-container">
+                <table class="points-table">
+                    <thead>
+                        <tr><th colspan="2" style="border-bottom: 1px solid black;">Puntos de pago</th></tr>
+                        <tr>
+                            <th style="background-color: white; border-bottom: 1px solid black; font-size: 11px; font-weight: bold; width: 50%;">Bancos</th>
+                            <th style="background-color: white; border-bottom: 1px solid black; font-size: 11px; font-weight: bold; width: 50%;">Medios electrónicos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left;">
+                                <span style="font-size: 8px; font-weight: bold; color: #555;">•BANCO DAVIVIENDA S.A</span><br>
+                                <span style="font-size: 8px; font-weight: bold; color: #555;">•BANCO DE BOGOTA</span>
+                            </td>
+                            <td>
+                                <div class="pse-logo">pse</div>
+                                <span style="font-size: 10px;">Ref. pago PSE:<br>115690709940</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="bank-exclusive">Espacio para Uso Exclusivo del Banco</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="date-timestamp">2026-03-06 11:03:16</div>
+
+</div>
+
+</body>
+</html>
